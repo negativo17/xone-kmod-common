@@ -1,14 +1,24 @@
+%global commit0 eaa55d0383839eb805f1bf2b75766311956de6e6
+%global date 20240118
+%global shortcommit0 %(c=%{commit0}; echo ${c:0:7})
+#global tag %{version}
+
 %global real_name xone
 
 Name:           %{real_name}-kmod-common
 Version:        0.3
-Release:        3%{?dist}
+Release:        4%{!?tag:.%{date}git%{shortcommit0}}%{?dist}
 Summary:        Linux kernel driver for Xbox One and Xbox Series X|S accessories common files
 License:        GPLv2
 URL:            https://github.com/medusalix/%{real_name}
 BuildArch:      noarch
 
-Source0:        %{url}/archive/v%{version}.tar.gz#/%{real_name}-%{version}.tar.gz
+%if 0%{?tag:1}
+Source0:        %{url}/archive/v%{version}.tar.gz#/xone-%{version}.tar.gz
+%else
+Source0:        %{url}/archive/%{commit0}.tar.gz#/xone-%{shortcommit0}.tar.gz
+%endif
+
 # Windows driver and firmware file:
 Source1:        http://download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/07/1cd6a87c-623f-4407-a52d-c31be49e925c_e19f60808bdcbfbd3c3df6be3e71ffc52e43261e.cab
 
@@ -24,7 +34,11 @@ Provides:       %{real_name}-kmod-common = %{?epoch:%{epoch}:}%{version}
 Linux kernel driver for Xbox One and Xbox Series X|S accessories common files.
  
 %prep
-%autosetup -p1 -n %{real_name}-%{version}
+%if 0%{?tag:1}
+%autosetup -p1 -n xone-%{version}
+%else
+%autosetup -p1 -n xone-%{commit0}
+%endif
 
 # Firmware:
 cabextract -F FW_ACC_00U.bin %{SOURCE1}
@@ -46,6 +60,9 @@ install -p -m 0644 -D FW_ACC_00U.bin %{buildroot}%{_prefix}/lib/firmware/xow_don
 %{_prefix}/lib/firmware/xow_dongle.bin
 
 %changelog
+* Tue Jan 23 2024 Simone Caronni <negativo17@gmail.com> - 0.3-4.20240118giteaa55d0
+- Update to latest snapshot.
+
 * Wed Jan 17 2024 Simone Caronni <negativo17@gmail.com> - 0.3-3
 - Clean up SPEC file.
 
