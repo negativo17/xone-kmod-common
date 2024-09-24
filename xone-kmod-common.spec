@@ -6,8 +6,8 @@
 %global real_name xone
 
 Name:           %{real_name}-kmod-common
-Version:        0.3
-Release:        5%{!?tag:.%{date}git%{shortcommit0}}%{?dist}
+Version:        0.3%{!?tag:^%{date}git%{shortcommit0}}
+Release:        6%{?dist}
 Summary:        Linux kernel driver for Xbox One and Xbox Series X|S accessories common files
 License:        GPLv2
 URL:            https://github.com/medusalix/%{real_name}
@@ -60,6 +60,9 @@ install -p -m 0644 -D FW_ACC_00U.bin %{buildroot}%{_prefix}/lib/firmware/xow_don
 %{_prefix}/lib/firmware/xow_dongle.bin
 
 %changelog
+* Tue Sep 24 2024 Simone Caronni <negativo17@gmail.com> - 0.3^20240425git29ec357-6
+- Use new packaging guidelines for snapshots.
+
 * Mon May 13 2024 Simone Caronni <negativo17@gmail.com> - 0.3-5.20240425git29ec357
 - Update to latest snapshot.
 
