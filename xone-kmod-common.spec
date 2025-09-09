@@ -1,23 +1,14 @@
-%global commit 197b160f7806d7d27117b12198cacb7656a07f1f
-%global date 20250502
-%global shortcommit %(c=%{commit}; echo ${c:0:7})
-%global tag %{version}
-
 %global real_name xone
 
 Name:           %{real_name}-kmod-common
-Version:        0.4.4%{!?tag:^%{date}git%{shortcommit}}
+Version:        0.4.4
 Release:        1%{?dist}
 Summary:        Linux kernel driver for Xbox One and Xbox Series X|S accessories common files
 License:        GPLv2
 URL:            https://github.com/dlundqvist/xone
 BuildArch:      noarch
 
-%if 0%{?tag:1}
 Source0:        %{url}/archive/v%{version}.tar.gz#/xone-%{version}.tar.gz
-%else
-Source0:        %{url}/archive/%{commit}.tar.gz#/xone-%{shortcommit}.tar.gz
-%endif
 
 # Windows driver and firmware file (firmware/install.sh):
 Source1:        http://download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/07/1cd6a87c-623f-4407-a52d-c31be49e925c_e19f60808bdcbfbd3c3df6be3e71ffc52e43261e.cab
@@ -35,11 +26,7 @@ Provides:       %{real_name}-kmod-common = %{?epoch:%{epoch}:}%{version}
 Linux kernel driver for Xbox One and Xbox Series X|S accessories common files.
  
 %prep
-%if 0%{?tag:1}
 %autosetup -p1 -n xone-%{version}
-%else
-%autosetup -p1 -n xone-%{commit}
-%endif
 
 # Firmware:
 7z e %{SOURCE1} FW_ACC_00U.bin
