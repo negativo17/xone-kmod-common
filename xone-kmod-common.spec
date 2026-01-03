@@ -10,9 +10,11 @@ BuildArch:      noarch
 
 Source0:        %{url}/archive/v%{version}.tar.gz#/xone-%{version}.tar.gz
 
-# Windows driver and firmware file (firmware/install.sh):
-Source1:        http://download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/07/1cd6a87c-623f-4407-a52d-c31be49e925c_e19f60808bdcbfbd3c3df6be3e71ffc52e43261e.cab
-Source2:        https://catalog.s.download.windowsupdate.com/d/msdownload/update/driver/drvs/2015/12/20810869_8ce2975a7fbaa06bcfb0d8762a6275a1cf7c1dd3.cab
+# Windows driver and firmware files (firmware/install.sh):
+Source1:        https://catalog.s.download.windowsupdate.com/d/msdownload/update/driver/drvs/2017/03/2ea9591b-f751-442c-80ce-8f4692cdc67b_6b555a3a288153cf04aec6e03cba360afe2fce34.cab
+Source2:        https://catalog.s.download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/07/1cd6a87c-623f-4407-a52d-c31be49e925c_e19f60808bdcbfbd3c3df6be3e71ffc52e43261e.cab
+Source3:        https://catalog.s.download.windowsupdate.com/c/msdownload/update/driver/drvs/2017/06/1dbd7cb4-53bc-4857-a5b0-5955c8acaf71_9081931e7d664429a93ffda0db41b7545b7ac257.cab
+Source4:        https://catalog.s.download.windowsupdate.com/d/msdownload/update/driver/drvs/2017/08/aeff215c-3bc4-4d36-a3ea-e14bfa8fa9d2_e58550c4f74a27e51e5cb6868b10ff633fa77164.cab
 
 BuildRequires:  p7zip-plugins
 # UDev rule location (_udevrulesdir) and systemd macros:
@@ -30,9 +32,13 @@ Linux kernel driver for Xbox One and Xbox Series X|S accessories common files.
 
 # Firmware:
 7z e %{SOURCE1} FW_ACC_00U.bin
-mv FW_ACC_00U.bin xow_dongle.bin
+mv FW_ACC_00U.bin xone_dongle_02e6.bin
 7z e %{SOURCE2} FW_ACC_00U.bin
-mv FW_ACC_00U.bin xow_dongle_045e_02e6.bin
+mv FW_ACC_00U.bin xone_dongle_02fe.bin
+7z e %{SOURCE3} FW_ACC_CL.bin
+mv FW_ACC_CL.bin xone_dongle_02f9.bin
+7z e %{SOURCE4} FW_ACC_BR.bin
+mv FW_ACC_BR.bin xone_dongle_091e.bin
 
 %install
 mkdir -p %{buildroot}%{_udevrulesdir}
@@ -43,14 +49,16 @@ mkdir -p %{buildroot}%{_prefix}/lib/modprobe.d/
 install -p -m 0644 install/modprobe.conf %{buildroot}%{_prefix}/lib/modprobe.d/xone.conf
 
 # Firmware:
-install -p -m 0644 xow_dongle*.bin %{buildroot}%{_prefix}/lib/firmware/
+install -p -m 0644 xone_dongle*.bin %{buildroot}%{_prefix}/lib/firmware/
 
 %files
 %license LICENSE
 %doc README.md
 %{_prefix}/lib/modprobe.d/%{real_name}.conf
-%{_prefix}/lib/firmware/xow_dongle.bin
-%{_prefix}/lib/firmware/xow_dongle_045e_02e6.bin
+%{_prefix}/lib/firmware/xone_dongle_02e6.bin
+%{_prefix}/lib/firmware/xone_dongle_02fe.bin
+%{_prefix}/lib/firmware/xone_dongle_02f9.bin
+%{_prefix}/lib/firmware/xone_dongle_091e.bin
 
 %changelog
 * Tue Dec 23 2025 Simone Caronni <negativo17@gmail.com> - 0.5.1-1
