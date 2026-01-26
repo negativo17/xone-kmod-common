@@ -1,7 +1,7 @@
 %global real_name xone
 
 Name:           %{real_name}-kmod-common
-Version:        0.5.2
+Version:        0.5.4
 Release:        1%{?dist}
 Summary:        Linux kernel driver for Xbox One and Xbox Series X|S accessories common files
 License:        GPLv2
@@ -61,6 +61,9 @@ install -p -m 0644 xone_dongle*.bin %{buildroot}%{_prefix}/lib/firmware/
 %{_prefix}/lib/firmware/xone_dongle_091e.bin
 
 %changelog
+* Mon Jan 26 2026 Simone Caronni <negativo17@gmail.com> - 0.5.4-1
+- Update to 0.5.4.
+
 * Mon Jan 12 2026 Simone Caronni <negativo17@gmail.com> - 0.5.2-1
 - Update to 0.5.2.
 
