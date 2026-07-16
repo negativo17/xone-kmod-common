@@ -2,13 +2,14 @@
 
 Name:           %{real_name}-kmod-common
 Version:        0.5.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Linux kernel driver for Xbox One and Xbox Series X|S accessories common files
 License:        GPLv2
 URL:            https://github.com/dlundqvist/xone
 BuildArch:      noarch
 
 Source0:        %{url}/archive/v%{version}.tar.gz#/xone-%{version}.tar.gz
+Patch0:         https://github.com/antheas/xone/commit/9053b2a0f66f948357a9c79fb41c284162a24688.patch
 
 # Windows driver and firmware files (firmware/install.sh):
 Source1:        https://catalog.s.download.windowsupdate.com/d/msdownload/update/driver/drvs/2017/03/2ea9591b-f751-442c-80ce-8f4692cdc67b_6b555a3a288153cf04aec6e03cba360afe2fce34.cab
@@ -61,6 +62,9 @@ install -p -m 0644 xone_dongle*.bin %{buildroot}%{_prefix}/lib/firmware/
 %{_prefix}/lib/firmware/xone_dongle_091e.bin
 
 %changelog
+* Thu Jul 16 2026 Simone Caronni <negativo17@gmail.com> - 0.5.8-2
+- Do not override xpad for wired use case.
+
 * Tue Mar 17 2026 Simone Caronni <negativo17@gmail.com> - 0.5.8-1
 - Update to 0.5.8.
 
